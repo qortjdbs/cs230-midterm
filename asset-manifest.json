@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/cs230-midterm/static/css/main.82029cd2.css",
+    "main.js": "/cs230-midterm/static/js/main.e9b6161f.js",
+    "index.html": "/cs230-midterm/index.html",
+    "main.82029cd2.css.map": "/cs230-midterm/static/css/main.82029cd2.css.map",
+    "main.e9b6161f.js.map": "/cs230-midterm/static/js/main.e9b6161f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.82029cd2.css",
+    "static/js/main.e9b6161f.js"
+  ]
+}
