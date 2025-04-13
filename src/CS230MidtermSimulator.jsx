@@ -6,31 +6,37 @@ const questions = [
     number: 1,
     question: "How many bytes are required to store `kaist` and `\"hello\n\"` in the C program on 64-bit Linux?",
     choices: ["11", "12", "15", "16"],
-    answer: "16"
+    answer: "16",
+    image: process.env.PUBLIC_URL + "/images/p1.png" 
+    
   },
   {
     number: 2,
     question: "In which area of virtual memory is the variable `kaist` stored?",
     choices: ["Text", "Data", "Heap", "Stack"],
-    answer: "Stack"
+    answer: "Stack",
+    image: process.env.PUBLIC_URL + "/images/p2.png" 
   },
   {
     number: 3,
     question: "Where is the dynamically linked `printf()` machine code stored?",
     choices: ["Text", "Kernel area", "Shared Library", "Stack"],
-    answer: "Shared Library"
+    answer: "Shared Library",
+    image: process.env.PUBLIC_URL + "/images/p3.png" 
   },
   {
     number: 4,
     question: "In which register is the address of the first argument `\"hello\n\"` stored?",
     choices: ["rsi", "rdi", "rsp", "rax"],
-    answer: "rsi"
+    answer: "rsi",
+    image: process.env.PUBLIC_URL + "/images/p4.png" 
   },
   {
     number: 5,
     question: "Which program comes third in the C compilation process and what is its role?",
     choices: ["Preprocessor", "Compiler", "Assembler", "Linker"],
-    answer: "Assembler"
+    answer: "Assembler",
+    image: process.env.PUBLIC_URL + "/images/p5.png" 
   },
   {
     number: 6,
@@ -60,13 +66,15 @@ const questions = [
     number: 10,
     question: "What is the name of the memory element shown as a D latch circuit diagram?",
     choices: ["R-S Latch", "D Latch", "D Flip-Flop", "T Flip-Flop"],
-    answer: "D Latch"
+    answer: "D Latch",
+    image: process.env.PUBLIC_URL + "/images/p10.png" 
   },
   {
     number: 11,
     question: "To keep the outputs of an R-S latch unchanged, what values should be assigned to R and S?",
     choices: ["0 and 0", "0 and 1", "1 and 0", "1 and 1"],
-    answer: "0 and 0"
+    answer: "0 and 0",
+    image: process.env.PUBLIC_URL + "/images/p11.png" 
   },
   {
     number: 12,
@@ -86,23 +94,24 @@ const questions = [
     choices: ["0", "1", "2", "3"],
     answer: "1"
   },
-  {
-    number: 15,
-    question: "What is the final value of the Program Counter (PC) after execution of the given MU0 program?",
-    choices: ["9", "10", "11", "12"],
-    answer: "11"
-  },
-  {
-    number: 16,
-    question: "Which value should go in the control signal table at (5) for LDA instruction?",
-    choices: ["=B", "0", "B+1", "1"],
-    answer: "=B"
-  },
+  // {
+  //   number: 15,
+  //   question: "What is the final value of the Program Counter (PC) after execution of the given MU0 program?",
+  //   choices: ["9", "10", "11", "12"],
+  //   answer: "11"
+  // },
+  // {
+  //   number: 16,
+  //   question: "Which value should go in the control signal table at (5) for LDA instruction?",
+  //   choices: ["=B", "0", "B+1", "1"],
+  //   answer: "=B"
+  // },
   {
     number: 17,
     question: "Which byte ordering is used for 0x01234567 stored as 01 23 45 67?",
     choices: ["MSB Endian", "LSB Endian", "Big Endian", "Little Endian"],
-    answer: "Big Endian"
+    answer: "Big Endian",
+    image: "/images/p17.png" 
   },
   {
     number: 18,
@@ -119,7 +128,8 @@ const questions = [
       "It computes the base address of univ[index]",
       "It performs a multiplication with 8"
     ],
-    answer: "It computes the base address of univ[index]"
+    answer: "It computes the base address of univ[index]",
+    image: process.env.PUBLIC_URL + "/images/p19.png" 
   },
   {
     number: 20,
@@ -130,7 +140,8 @@ const questions = [
       "RIP=400550, RSP=120, M[RSP]=400544",
       "RIP=400549, RSP=118, M[RSP]=400550"
     ],
-    answer: "RIP=400550, RSP=118, M[RSP]=400549"
+    answer: "RIP=400550, RSP=118, M[RSP]=400549",
+    image: process.env.PUBLIC_URL + "/images/p20.png" 
   },
   {
     number: 21,
@@ -153,7 +164,8 @@ const questions = [
     number: 23,
     question: "What is the binary of TMax in 6-bit two's complement?",
     choices: ["011111", "111111", "100000", "010101"],
-    answer: "011111"
+    answer: "011111",
+    image: process.env.PUBLIC_URL + "/images/p23.png" 
   },
   {
     number: 24,
@@ -250,6 +262,13 @@ export default function CS230MidtermSimulator() {
           <p className="mb-4 font-medium">
             <span className="text-blue-500">Question {currentQ.number}:</span> {currentQ.question}
           </p>
+          {currentQ.image && (
+  <img
+    src={currentQ.image}
+    alt={`Question ${currentQ.number}`}
+    className="mb-4 border rounded max-w-full"
+  />
+)}
           <ul className="space-y-2 mb-4">
             {currentQ.choices.map((choice, i) => (
               <li
@@ -287,6 +306,8 @@ export default function CS230MidtermSimulator() {
         </div>
       )}
     </div>
+
+
   );
 }
 
