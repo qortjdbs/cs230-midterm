@@ -2,12 +2,13 @@
   "name": "cs230-midterm",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "homepage": "https://qortjdbs.github.io/cs230-midterm",
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build --dotfiles"
+},
   "dependencies": {
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.0",

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 
 const questions = [
   {
@@ -185,8 +186,21 @@ export default function CS230MidtermSimulator() {
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
   const [done, setDone] = useState(false);
+  const [started, setStarted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(70 * 60); // 1시간 10분
+  const shuffled = [...questions].sort(() => Math.random() - 0.5);
+  const [shuffledQuestions] = useState(shuffled);
 
-  const currentQ = questions[current];
+  const currentQ = shuffledQuestions[current];
+
+  useEffect(() => {
+    if (started && !done && timeLeft > 0) {
+      const timer = setInterval(() => setTimeLeft((t) => t - 1), 1000);
+      return () => clearInterval(timer);
+    } else if (timeLeft === 0) {
+      setDone(true);
+    }
+  }, [started, timeLeft, done]);
 
   const handleSelect = (choice) => {
     setSelected(choice);
@@ -194,7 +208,7 @@ export default function CS230MidtermSimulator() {
 
   const handleSubmit = () => {
     if (selected === currentQ.answer) setScore(score + 1);
-    if (current + 1 === questions.length) {
+    if (current + 1 === shuffledQuestions.length) {
       setDone(true);
     } else {
       setCurrent(current + 1);
@@ -202,9 +216,35 @@ export default function CS230MidtermSimulator() {
     }
   };
 
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const s = (seconds % 60).toString().padStart(2, "0");
+    return `${m}:${s}`;
+  };
+
+  if (!started) {
+    return (
+      <div className="max-w-2xl mx-auto p-6 text-center">
+        <h1 className="text-3xl font-bold mb-6">🧠 CS230 Midterm Simulation</h1>
+        <p className="mb-4">총 {questions.length}문제, 제한시간 1시간 10분</p>
+        <button
+          onClick={() => setStarted(true)}
+          className="px-6 py-3 bg-blue-600 text-white rounded text-lg"
+        >
+          Start Test
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-2xl mx-auto p-6 text-left">
-      <h1 className="text-2xl font-bold mb-6">🧠 CS230 Midterm Simulation</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-xl font-bold">CS230 Midterm Simulation</h1>
+        <span className="font-mono text-red-600">⏱ {formatTime(timeLeft)}</span>
+      </div>
       {!done ? (
         <div>
           <p className="mb-4 font-medium">
@@ -228,15 +268,25 @@ export default function CS230MidtermSimulator() {
             disabled={selected === null}
             className="px-4 py-2 bg-blue-600 text-white rounded disabled:bg-gray-300"
           >
-            {current + 1 === questions.length ? "Finish" : "Next"}
+            {current + 1 === shuffledQuestions.length ? "Finish" : "Next"}
           </button>
         </div>
       ) : (
         <div className="text-center">
-          <h2 className="text-xl font-bold">✅ Simulation Complete!</h2>
-          <p className="mt-4">Your score: {score} / {questions.length}</p>
+          <h2 className="text-xl font-bold mb-2">✅ Simulation Complete!</h2>
+          <p className="text-lg mb-4">Your score: {score} / {shuffledQuestions.length}</p>
+          <p className="mb-2 text-sm text-gray-500">({Math.round((score / shuffledQuestions.length) * 100)}% correct)</p>
+          <h3 className="text-md font-semibold mt-6 mb-2">📘 Correct Answers:</h3>
+          <ul className="text-sm text-left">
+            {shuffledQuestions.map((q) => (
+              <li key={q.number} className="mb-1">
+                <strong>Q{q.number}:</strong> {q.answer}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
   );
 }
+
